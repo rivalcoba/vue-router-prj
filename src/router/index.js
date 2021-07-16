@@ -13,6 +13,7 @@ const routes = [
     path: "/",
     name: "Home",
     component: Home,
+    props: true,
   },
   {
     path: "/about",
@@ -22,6 +23,7 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/About.vue"),
+    props: true,
   },
   {
     path: "/details/:slug",
@@ -30,10 +32,12 @@ const routes = [
       import(
         /* webpackChunkName: "DestinationDetails" */ "../views/DestinationDetails.vue"
       ),
+    props: true,
   },
 ];
 
 const router = new VueRouter({
+  mode: "history",
   linkExactActiveClass: "itgam-link-active-class",
   routes,
 });
