@@ -1,10 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
-// import Brazil from "../views/Brazil.vue";
-// import Panama from "../views/Panama.vue";
-// import Jamaica from "../views/Jamaica.vue";
-// import Hawaii from "../views/Hawaii.vue";
+import store from "../store";
 
 Vue.use(VueRouter);
 
@@ -44,6 +41,27 @@ const routes = [
           ),
       },
     ],
+    beforeEnter: (to, from, next) => {
+      // Verificando si existe información
+      let exists = store.destinations.find(
+        (destination) => destination.slug === to.params.slug
+      );
+      if (exists) {
+        next();
+      } else {
+        next({ name: "NotFound" });
+      }
+    },
+  },
+  {
+    path: "/404",
+    alias: "*",
+    name: "NotFound",
+    component: () =>
+      import(
+        /* webpackChunkName: "NotFound" */
+        "@/views/NotFound"
+      ),
   },
 ];
 
