@@ -1,8 +1,7 @@
 <template>
   <section>
-    <h1>Experiencies</h1>
     <h2>{{ experience.name }}</h2>
-    <div class="experiencie-details">
+    <div class="experience-details">
       <img
         :src="require(`@/assets/${experience.image}`)"
         :alt="experience.name"

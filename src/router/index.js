@@ -68,6 +68,21 @@ const routes = [
 const router = new VueRouter({
   mode: "history",
   linkExactActiveClass: "itgam-link-active-class",
+  scrollBehavior(to, from, savePosition) {
+    if (savePosition) {
+      return savePosition;
+    } else {
+      const position = {};
+      // Para simular el scroll hacia una ancla
+      if (to.hash) {
+        position.selector = to.hash;
+        if (document.querySelector(to.hash)) {
+          return position;
+        }
+        return false;
+      }
+    }
+  },
   routes,
 });
 
