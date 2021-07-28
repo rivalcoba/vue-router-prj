@@ -76,6 +76,9 @@ const router = new VueRouter({
       // Para simular el scroll hacia una ancla
       if (to.hash) {
         position.selector = to.hash;
+        if (to.hash === "#experience") {
+          position.offset = { y: 200 };
+        }
         if (document.querySelector(to.hash)) {
           return position;
         }
