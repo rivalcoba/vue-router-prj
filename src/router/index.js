@@ -54,13 +54,32 @@ const routes = [
     },
   },
   {
+    path: "/user",
+    name: "user",
+    component: () => import(/* webpackChunkName: "User" */ "@/views/User.vue"),
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/invoices",
+    name: "invoices",
+    component: () =>
+      import(/* webpackChunkName: "Invoices" */ "@/views/Invoices.vue"),
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/login",
+    name: "login",
+    component: () =>
+      import(/* webpackChunkName: "Login" */ "@/views/Login.vue"),
+  },
+  {
     path: "/404",
     alias: "*",
     name: "NotFound",
     component: () =>
       import(
         /* webpackChunkName: "NotFound" */
-        "@/views/NotFound"
+        "@/views/NotFound.vue"
       ),
   },
 ];
@@ -87,6 +106,23 @@ const router = new VueRouter({
     }
   },
   routes,
+});
+
+// Adding the middleware
+router.beforeEach((to, from, next) => {
+  if (to.matched.some((record) => record.meta.requiresAuth)) {
+    // Need to login
+    if (!store.user) {
+      next({
+        name: "login",
+        query: { redirect: to.fullPath },
+      });
+    } else {
+      next();
+    }
+  } else {
+    next();
+  }
 });
 
 export default router;
